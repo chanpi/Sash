@@ -16,7 +16,7 @@ extern "C" {
 	// 指定ミリ秒Sleep()を実行します。
 	// 但し、オーバーヘッドが大きいため、Sleep(0)やSleep(1)などは意図したとおりに動作しない可能性があります。
 	// [引数]
-	// DWORD dwMilliseconds; -- スリープする時間（ミリ秒）
+	// DWORD dwMilliseconds; -- スリープする時間（ミリ秒）。NULLの場合はSaYield()を呼び出します。
 	void SaSleep( const std::vector<void*>* params );
 
 #ifdef __cplusplus

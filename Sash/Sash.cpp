@@ -39,6 +39,9 @@ int WINAPI WinMain( HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, LPSTR 
 	functions.insert( make_pair( _T("sasetfocus"), SaSetFocus ) );
 	functions.insert( make_pair( _T("sadumpmemory"), SaDumpMemory ) );
 	functions.insert( make_pair( _T("sasetcursorpos"), SaSetCursorPos ) );
+	functions.insert( make_pair( _T("salbuttonclickonwindow"), SaLButtonClickOnWindow ) );
+	functions.insert( make_pair( _T("sambuttonclickonwindow"), SaMButtonClickOnWindow ) );
+	functions.insert( make_pair( _T("sarbuttonclickonwindow"), SaRButtonClickOnWindow ) );
 	functions.insert( make_pair( _T("salbuttonclick"), SaLButtonClick ) );
 	functions.insert( make_pair( _T("sambuttonclick"), SaMButtonClick ) );
 	functions.insert( make_pair( _T("sarbuttonclick"), SaRButtonClick ) );

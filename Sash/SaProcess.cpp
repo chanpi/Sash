@@ -20,19 +20,13 @@ void SaYield( const vector<void*>* /*params*/ ) {
 // 指定ミリ秒Sleep()を実行します。
 // 但し、オーバーヘッドが大きいため、Sleep(0)やSleep(1)などは意図したとおりに動作しない可能性があります。
 // [引数]
-// DWORD dwMilliseconds; -- スリープする時間（ミリ秒）
+// DWORD dwMilliseconds; -- スリープする時間（ミリ秒）。NULLの場合はSaYield()を呼び出します。
 // http://www.isus.jp/article/parallel-special/benefitting-sleep-loops/
 void SaSleep( const vector<void*>* params ) {
-	if ( NULL == params ) {
-		_tprintf( g_szFormatErrorS, g_szSaSleep, g_szError001 );
-	} else if ( params->size() < 1 ) {
-		_tprintf( g_szFormatErrorS, g_szSaSleep, g_szError002 );
+	DWORD dwMilliseconds = (NULL==params) ? 0 : _ttoi((LPCTSTR)(*params)[0]);
+	if ( dwMilliseconds <= 1 ) {
+		SaYield( params );
 	} else {
-		DWORD dwMilliseconds = _ttoi((LPCTSTR)(*params)[0]);
-		if ( dwMilliseconds <= 1 ) {
-			SaYield( params );
-		} else {
-			Sleep( dwMilliseconds );
-		}
+		Sleep( dwMilliseconds );
 	}
 }

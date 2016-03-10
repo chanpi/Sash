@@ -3,13 +3,20 @@
 
 #include <tchar.h>
 
+__declspec(selectany) const TCHAR* g_szTitle = _T("Sash.exe");
 __declspec(selectany) const TCHAR* g_szLocale = _T("Japanese");
+
 __declspec(selectany) const TCHAR* g_szFormatS = _T("%s");
 __declspec(selectany) const TCHAR* g_szFormatErrorS = _T("%s: %s");
+__declspec(selectany) const TCHAR* g_szFormatX = _T("%x");
+__declspec(selectany) const TCHAR* g_szFormatMemList = _T("0x%08x | %08x | %s\n");
+
 __declspec(selectany) const TCHAR* g_szHelp = _T("/h");
 __declspec(selectany) const TCHAR* g_szUsage = _T("[USAGE] ");
+
 __declspec(selectany) const TCHAR* g_szTRUE = _T("TRUE");
 __declspec(selectany) const TCHAR* g_szBar = _T("|");
+__declspec(selectany) const TCHAR* g_szHeap = _T("*Heap");
 
 __declspec(selectany) const char* g_szFormatC = "%c";
 
@@ -23,6 +30,7 @@ __declspec(selectany) const TCHAR* g_szSaHwndWindowNameChild = _T("SA_HWND_WINDO
 __declspec(selectany) const TCHAR* g_szError000 = _T("[ERROR] 未定義の関数名が指定されました。\n");
 __declspec(selectany) const TCHAR* g_szError001 = _T("[ERROR] 引数の指定が誤っています(無効なポインタです)。\n");
 __declspec(selectany) const TCHAR* g_szError002 = _T("[ERROR] 引数が足りません。\n");
+__declspec(selectany) const TCHAR* g_szError003 = _T("[ERROR] メモリの確保に失敗しました。\n");
 
 
 // 数値

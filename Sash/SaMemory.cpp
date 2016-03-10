@@ -74,7 +74,7 @@ void SaDumpMemory( const vector<void*>* params ) {
 					break;
 				} else {
 					if ( NULL != pAddress ) {
-						_stscanf_s( (LPCTSTR)(*params)[i], _T("%x"), pAddress, sizeof(DWORD) );
+						_stscanf_s( (LPCTSTR)(*params)[i], g_szFormatX, pAddress, sizeof(DWORD) );
 					}
 				}
 			}
@@ -137,7 +137,7 @@ SIZE_T EnumMemoryEntry( DWORD dwProcessId, DWORD dwProtect, DWORD dwListType, DW
 
 				{
 					TCHAR szBuf[128];
-					_stprintf_s( szBuf, _countof(szBuf), _T("0x%08x | %08x | *Heap\n"), mbi.BaseAddress, mbi.RegionSize );
+					_stprintf_s( szBuf, _countof(szBuf), g_szFormatMemList, mbi.BaseAddress, mbi.RegionSize, g_szHeap );
 					OutputDebugString(szBuf);
 				}
 			} while ( Heap32ListNext( hSnapshot, &hl ) );
@@ -157,7 +157,7 @@ SIZE_T EnumMemoryEntry( DWORD dwProcessId, DWORD dwProtect, DWORD dwListType, DW
 
 				{
 					TCHAR szBuf[128] = {0};
-					_stprintf_s( szBuf, _countof(szBuf), _T("0x%08x | %08x | %s\n"), me.modBaseAddr, me.dwSize, me.szModule );
+					_stprintf_s( szBuf, _countof(szBuf), g_szFormatMemList, me.modBaseAddr, me.dwSize, me.szModule );
 					OutputDebugString(szBuf);
 				}
 			} while ( Module32Next( hSnapshot, &me ) );
@@ -171,9 +171,8 @@ SIZE_T EnumMemoryEntry( DWORD dwProcessId, DWORD dwProtect, DWORD dwListType, DW
 		while ( dwAddress <= dwDumpTo ) {
 			TCHAR szBuf[128] = {0};
 			VirtualQueryEx( hProcess, (LPCVOID)dwAddress, &mbi, sizeMB );	// TODO dwAddressは次のページ境界に切り下げられる
-			_stprintf_s( szBuf, _countof(szBuf), _T("0x%08x | %08x | %s"), mbi.BaseAddress, mbi.RegionSize, mbi.Protect==PAGE_READONLY ? _T("-R--") : mbi.Protect==PAGE_READWRITE ? _T("-RW-") : _T("-??-") );
+			_stprintf_s( szBuf, _countof(szBuf), g_szFormatMemList, mbi.BaseAddress, mbi.RegionSize, mbi.Protect==PAGE_READONLY ? _T("-R--") : mbi.Protect==PAGE_READWRITE ? _T("-RW-") : _T("-??-") );
 			OutputDebugString(szBuf);
-			OutputDebugString(_T("\n"));
 
 			// PAGE_GUARDの領域は読み込めない？
 			if ( mbi.Protect == dwProtect || (dwProtect == 0 && !(mbi.Protect & PAGE_GUARD)) ) {
@@ -202,7 +201,7 @@ VOID Dump( DWORD dwProcessId, MEMORY_BASIC_INFORMATION* pMbi, SIZE_T nMbiList )
 	UCHAR* buffer = (UCHAR*)malloc(pMbi[0].RegionSize);
 	SIZE_T nBufferSize = pMbi[0].RegionSize;
 	if ( NULL == buffer ) {
-		MessageBox( NULL, _T("メモリの確保に失敗しました。[ProcessDump]"), _T("ProcessDump"), MB_OK );
+		MessageBox( NULL, g_szError003, g_szTitle, MB_OK );
 		CloseHandle( hProcess );
 		hProcess = NULL;
 		return;
