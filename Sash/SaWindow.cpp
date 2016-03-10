@@ -33,7 +33,9 @@ void SaSetForegroundWindow( const vector<void*>* /*params*/ ) {
 // bSetがTRUEの場合はhWndをアクティブにし、bSetがFALSEの場合は、以前アクティブだったウィンドウを再度アクティブにします。
 // 但し、以前アクティブだったウィンドウを再度アクティブにするのは、同一プロセス内で処理が行われたときのみ可能です。
 void SaSetActiveWindow( const vector<void*>* params ) {
-	if ( params->size() < 1 ) {
+	if ( NULL == params ) {
+		_tprintf( g_szFormatErrorS, g_szSaSetActiveWindow, g_szError001 );
+	} else if ( params->size() < 1 ) {
 		_tprintf( g_szFormatErrorS, g_szSaSetActiveWindow, g_szError002 );
 	} else {
 		static HWND hOldWnd = NULL;
@@ -57,7 +59,9 @@ void SaSetActiveWindow( const vector<void*>* params ) {
 //  MB_ICONQUESTION							疑問符（?）アイコンを表示します。
 //  MB_ICONSTOP,MB_ICONERROR,MB_ICONHAND	停止マークアイコンを表示します。
 void SaMessageBox( const vector<void*>* params ) {
-	if ( params->size() < 3 ) {
+	if ( NULL == params ) {
+		_tprintf( g_szFormatErrorS, g_szSaMessageBox, g_szError001 );
+	} else if ( params->size() < 3 ) {
 		_tprintf( g_szFormatErrorS, g_szSaMessageBox, g_szError002 );
 	} else {
 		UINT uType = MB_OK;

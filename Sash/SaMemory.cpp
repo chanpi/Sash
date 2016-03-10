@@ -36,7 +36,9 @@ static INT SortFunc(const void* a, const void* b);
 // Sash sadumpmemory 1234 /rw /H
 // Sash sadumpmemory 1234 /FR 3000000 /TO 4000000
 void SaDumpMemory( const vector<void*>* params ) {
-	if ( params->size() < 1 ) {
+	if ( NULL == params ) {
+		_tprintf( g_szFormatErrorS, g_szSaDumpMemory, g_szError001 );
+	} else if ( params->size() < 1 ) {
 		_tprintf( g_szFormatErrorS, g_szSaDumpMemory, g_szError002 );
 	} else {
 		DWORD dwProcessId = 0;

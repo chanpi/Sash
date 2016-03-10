@@ -16,7 +16,9 @@ namespace {
 // bSetがFALSEの場合は、以前キーボードフォーカスのあったウィンドウに再度キーボードフォーカスを設定します。
 // 但し、以前のウィンドウに再度キーボードフォーカスを設定するのは、同一プロセス内で処理が行われたときのみ可能です。
 void SaSetFocus( const vector<void*>* params ) {
-	if ( params->size() < 1 ) {
+	if ( NULL == params ) {
+		_tprintf( g_szFormatErrorS, g_szSaSetFocus, g_szError001 );
+	} else if ( params->size() < 1 ) {
 		_tprintf( g_szFormatErrorS, g_szSaSetFocus, g_szError002 );
 	} else {
 		static HWND hOldWnd = NULL;

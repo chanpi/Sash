@@ -17,19 +17,19 @@ extern "C" {
 	// [引数]
 	// int x;
 	// int y;
-	void SaLbuttonClick( const std::vector<void*>* params );
+	void SaLButtonClick( const std::vector<void*>* params );
 
 	// マウス中ボタンをシングルクリックします。内部でSendInput()を使用します。
 	// [引数]
 	// int x;
 	// int y;
-	void SaMbuttonClick( const std::vector<void*>* params );
+	void SaMButtonClick( const std::vector<void*>* params );
 
 	// マウス右ボタンをシングルクリックします。内部でSendInput()を使用します。
 	// [引数]
 	// int x;
 	// int y;
-	void SaRbuttonClick( const std::vector<void*>* params );
+	void SaRButtonClick( const std::vector<void*>* params );
 
 #ifdef __cplusplus
 }

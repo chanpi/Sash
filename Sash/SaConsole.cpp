@@ -23,7 +23,9 @@ namespace {
 // •¶šÔFFOREGROUND_RED
 // •¶š”’FFOREGROUND_WHITE
 void SaPrintfWithColor( const vector<void*>* params ) {
-	if ( params->size() < 2 ) {
+	if ( NULL == params ) {
+		_tprintf( g_szFormatErrorS, g_szSaPrintfWithColor, g_szError001 );
+	} else if ( params->size() < 2 ) {
 		_tprintf( g_szFormatErrorS, g_szSaPrintfWithColor, g_szError002 );
 	} else {
 		typedef map< tstring, WORD > TextAttributes;

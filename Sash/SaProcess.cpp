@@ -23,7 +23,9 @@ void SaYield( const vector<void*>* /*params*/ ) {
 // DWORD dwMilliseconds; -- スリープする時間（ミリ秒）
 // http://www.isus.jp/article/parallel-special/benefitting-sleep-loops/
 void SaSleep( const vector<void*>* params ) {
-	if ( params->size() < 1 ) {
+	if ( NULL == params ) {
+		_tprintf( g_szFormatErrorS, g_szSaSleep, g_szError001 );
+	} else if ( params->size() < 1 ) {
 		_tprintf( g_szFormatErrorS, g_szSaSleep, g_szError002 );
 	} else {
 		DWORD dwMilliseconds = _ttoi((LPCTSTR)(*params)[0]);

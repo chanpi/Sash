@@ -7,6 +7,9 @@ using namespace std;
 
 namespace {
 	LPCTSTR g_szSaSetCursorPos = _T("SaSetCursorPos()");
+	LPCTSTR g_szSaLButtonClick = _T("SaLButtonClick()");
+	LPCTSTR g_szSaMButtonClick = _T("SaMButtonClick()");
+	LPCTSTR g_szSaRButtonClick = _T("SaRButtonClick()");
 };
 
 static void ActMouse( DWORD type );
@@ -16,7 +19,9 @@ static void ActMouse( DWORD type );
 // int x;
 // int y;
 void SaSetCursorPos( const vector<void*>* params ) {
-	if ( params->size() < 2 ) {
+	if ( NULL == params ) {
+		_tprintf( g_szFormatErrorS, g_szSaSetCursorPos, g_szError001 );
+	} else if ( params->size() < 2 ) {
 		_tprintf( g_szFormatErrorS, g_szSaSetCursorPos, g_szError002 );
 	} else {
 		int x = _ttoi((LPCTSTR)(*params)[0]);
@@ -29,7 +34,10 @@ void SaSetCursorPos( const vector<void*>* params ) {
 // [à¯êî]
 // int x;
 // int y;
-void SaLbuttonClick( const vector<void*>* params ) {
+void SaLButtonClick( const vector<void*>* params ) {
+	if ( NULL == params ) {
+		_tprintf( g_szFormatErrorS, g_szSaLButtonClick, g_szError001 );
+	}
 	SaSetCursorPos( params );
 	ActMouse( MOUSEEVENTF_LEFTDOWN );
 }
@@ -38,7 +46,10 @@ void SaLbuttonClick( const vector<void*>* params ) {
 // [à¯êî]
 // int x;
 // int y;
-void SaMbuttonClick( const vector<void*>* params ) {
+void SaMButtonClick( const vector<void*>* params ) {
+	if ( NULL == params ) {
+		_tprintf( g_szFormatErrorS, g_szSaMButtonClick, g_szError001 );
+	}
 	SaSetCursorPos( params );
 	ActMouse( MOUSEEVENTF_MIDDLEDOWN );
 }
@@ -47,7 +58,10 @@ void SaMbuttonClick( const vector<void*>* params ) {
 // [à¯êî]
 // int x;
 // int y;
-void SaRbuttonClick( const vector<void*>* params ) {
+void SaRButtonClick( const vector<void*>* params ) {
+	if ( NULL == params ) {
+		_tprintf( g_szFormatErrorS, g_szSaRButtonClick, g_szError001 );
+	}
 	SaSetCursorPos( params );
 	ActMouse( MOUSEEVENTF_RIGHTDOWN );
 }
@@ -61,6 +75,5 @@ void ActMouse( DWORD type ) {
 	input[0].type = INPUT_MOUSE;
 	input[0].mi = mi[0];
 	SendInput(1, input, sizeof(INPUT));
-	//SaYield( NULL );
-	Sleep(0);
+	SaYield( NULL );
 }

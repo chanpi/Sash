@@ -15,7 +15,9 @@ namespace {
 // LPTSTR szBuffer; -- 環境変数の値を格納するバッファのポインタ
 // int nBufferLength; -- バッファサイズ
 void SaGetEnvironmentVariable( const vector<void*>* params ) {
-	if ( params->size() < 1 ) {
+	if ( NULL == params ) {
+		_tprintf( g_szFormatErrorS, g_szSaGetEnvironmentVariable, g_szError001 );
+	} else if ( params->size() < 1 ) {
 		_tprintf( g_szFormatErrorS, g_szSaGetEnvironmentVariable, g_szError002 );
 	} else {
 		LPCTSTR lpName = (LPCTSTR)(*params)[0];
