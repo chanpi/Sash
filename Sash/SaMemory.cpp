@@ -35,8 +35,8 @@ static INT SortFunc(const void* a, const void* b);
 // [Žg—p—á]
 // Sash sadumpmemory 1234 /rw /H
 // Sash sadumpmemory 1234 /FR 3000000 /TO 4000000
-void SaDumpMemory( const vector<void*> params ) {
-	if ( params.size() < 1 ) {
+void SaDumpMemory( const vector<void*>* params ) {
+	if ( params->size() < 1 ) {
 		_tprintf( g_szFormatErrorS, g_szSaDumpMemory, g_szError002 );
 	} else {
 		DWORD dwProcessId = 0;
@@ -48,31 +48,31 @@ void SaDumpMemory( const vector<void*> params ) {
 		MEMORY_BASIC_INFORMATION mbi[g_nMaxListCount] = {0};
 		INT nMbiList = 0;
 
-		INT nCount = params.size();
+		INT nCount = params->size();
 		if ( nCount > 0 ) {
-			dwProcessId = _ttol((LPCTSTR)params[0]);
+			dwProcessId = _ttol((LPCTSTR)(*params)[0]);
 
 			DWORD* pAddress = NULL;
 			for ( INT i = 1; i < nCount; i++ ) {
-				if ( !_tcscmp((LPCTSTR)params[i], g_szReadOnly) ) {
+				if ( !_tcscmp((LPCTSTR)(*params)[i], g_szReadOnly) ) {
 					dwProtect = PAGE_READONLY;
-				} else if ( !_tcscmp((LPCTSTR)params[i], g_szReadWrite) ) {
+				} else if ( !_tcscmp((LPCTSTR)(*params)[i], g_szReadWrite) ) {
 					dwProtect = PAGE_READWRITE;
-				} else if ( !_tcscmp((LPCTSTR)params[i], g_szHeapList) ) {
+				} else if ( !_tcscmp((LPCTSTR)(*params)[i], g_szHeapList) ) {
 					dwListType |= TH32CS_SNAPHEAPLIST;
-				} else if ( !_tcscmp((LPCTSTR)params[i], g_szModuleList) ) {
+				} else if ( !_tcscmp((LPCTSTR)(*params)[i], g_szModuleList) ) {
 					dwListType |= TH32CS_SNAPMODULE;
-				} else if ( !_tcscmp((LPCTSTR)params[i], g_szThreadList) ) {
+				} else if ( !_tcscmp((LPCTSTR)(*params)[i], g_szThreadList) ) {
 					dwListType |= TH32CS_SNAPTHREAD;
-				} else if ( !_tcscmp((LPCTSTR)params[i], g_szDumpFrom) ) {
+				} else if ( !_tcscmp((LPCTSTR)(*params)[i], g_szDumpFrom) ) {
 					pAddress = &dwDumpFrom;
-				} else if ( !_tcscmp((LPCTSTR)params[i], g_szDumpTo) ) {
+				} else if ( !_tcscmp((LPCTSTR)(*params)[i], g_szDumpTo) ) {
 					pAddress = &dwDumpTo;
-				} else if ( !_tcscmp((LPCTSTR)params[i], g_szRedirect) || !_tcscmp((LPCTSTR)params[i], g_szPipe) ) {
+				} else if ( !_tcscmp((LPCTSTR)(*params)[i], g_szRedirect) || !_tcscmp((LPCTSTR)(*params)[i], g_szPipe) ) {
 					break;
 				} else {
 					if ( NULL != pAddress ) {
-						_stscanf_s( (LPCTSTR)params[i], _T("%x"), pAddress, sizeof(DWORD) );
+						_stscanf_s( (LPCTSTR)(*params)[i], _T("%x"), pAddress, sizeof(DWORD) );
 					}
 				}
 			}

@@ -13,7 +13,7 @@ extern "C" {
 	// [隠し引数]
 	// LPTSTR szBuffer; -- 環境変数の値を格納するバッファのポインタ
 	// int nBufferLength; -- バッファサイズ
-	void SaGetEnvironmentVariable( const std::vector<void*> params );
+	void SaGetEnvironmentVariable( const std::vector<void*>* params );
 
 #ifdef __cplusplus
 }

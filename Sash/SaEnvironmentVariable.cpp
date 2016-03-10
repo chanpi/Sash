@@ -14,11 +14,11 @@ namespace {
 // [隠し引数]
 // LPTSTR szBuffer; -- 環境変数の値を格納するバッファのポインタ
 // int nBufferLength; -- バッファサイズ
-void SaGetEnvironmentVariable( const vector<void*> params ) {
-	if ( params.size() < 1 ) {
+void SaGetEnvironmentVariable( const vector<void*>* params ) {
+	if ( params->size() < 1 ) {
 		_tprintf( g_szFormatErrorS, g_szSaGetEnvironmentVariable, g_szError002 );
 	} else {
-		LPCTSTR lpName = (LPCTSTR)params[0];
+		LPCTSTR lpName = (LPCTSTR)(*params)[0];
 		if ( NULL == lpName ) {
 			_tprintf_s( g_szFormatErrorS, g_szSaGetEnvironmentVariable, g_szError001 );
 		} else {
@@ -27,9 +27,9 @@ void SaGetEnvironmentVariable( const vector<void*> params ) {
 			_tprintf_s( g_szFormatS, szBuffer );
 
 			// プログラム内部でのみ環境変数の値を受け取れる
-			if ( params.size() == 3 ) {
-				TCHAR* pBuffer = (TCHAR*)params[1];
-				int nBuffer = *((int*)params[2]);
+			if ( params->size() == 3 ) {
+				TCHAR* pBuffer = (TCHAR*)(*params)[1];
+				int nBuffer = *((int*)(*params)[2]);
 				_tcscpy_s( pBuffer, nBuffer, szBuffer );
 			}
 		}

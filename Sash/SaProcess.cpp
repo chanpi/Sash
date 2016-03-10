@@ -13,7 +13,7 @@ namespace {
 // 但し、インテルSSE2に対応していないx86 アーキテクチャーでは no-op となり、何の処理も行わない命令が実行されるか、フォルトが発生します。
 // [引数] なし
 // http://www.isus.jp/article/parallel-special/benefitting-sleep-loops/
-void SaYield( const vector<void*> params ) {
+void SaYield( const vector<void*>* /*params*/ ) {
 	_mm_pause();
 }
 
@@ -22,11 +22,11 @@ void SaYield( const vector<void*> params ) {
 // [引数]
 // DWORD dwMilliseconds; -- スリープする時間（ミリ秒）
 // http://www.isus.jp/article/parallel-special/benefitting-sleep-loops/
-void SaSleep( const vector<void*> params ) {
-	if ( params.size() < 1 ) {
+void SaSleep( const vector<void*>* params ) {
+	if ( params->size() < 1 ) {
 		_tprintf( g_szFormatErrorS, g_szSaSleep, g_szError002 );
 	} else {
-		DWORD dwMilliseconds = _ttoi((LPCTSTR)params[0]);
+		DWORD dwMilliseconds = _ttoi((LPCTSTR)(*params)[0]);
 		if ( dwMilliseconds <= 1 ) {
 			SaYield( params );
 		} else {

@@ -16,7 +16,7 @@ extern "C" {
 	// •¶š—ÎFFOREGROUND_GREEN
 	// •¶šÔFFOREGROUND_RED
 	// •¶š”’FFOREGROUND_WHITE
-	void SaPrintfWithColor( const std::vector<void*> params );
+	void SaPrintfWithColor( const std::vector<void*>* params );
 
 #ifdef __cplusplus
 }

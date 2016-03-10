@@ -15,12 +15,12 @@ static void ActMouse( DWORD type );
 // [à¯êî]
 // int x;
 // int y;
-void SaSetCursorPos( const vector<void*> params ) {
-	if ( params.size() < 2 ) {
+void SaSetCursorPos( const vector<void*>* params ) {
+	if ( params->size() < 2 ) {
 		_tprintf( g_szFormatErrorS, g_szSaSetCursorPos, g_szError002 );
 	} else {
-		int x = _ttoi((LPCTSTR)params[0]);
-		int y = _ttoi((LPCTSTR)params[1]);
+		int x = _ttoi((LPCTSTR)(*params)[0]);
+		int y = _ttoi((LPCTSTR)(*params)[1]);
 		SetCursorPos( x, y );
 	}
 }
@@ -29,7 +29,7 @@ void SaSetCursorPos( const vector<void*> params ) {
 // [à¯êî]
 // int x;
 // int y;
-void SaLbuttonClick( const vector<void*> params ) {
+void SaLbuttonClick( const vector<void*>* params ) {
 	SaSetCursorPos( params );
 	ActMouse( MOUSEEVENTF_LEFTDOWN );
 }
@@ -38,7 +38,7 @@ void SaLbuttonClick( const vector<void*> params ) {
 // [à¯êî]
 // int x;
 // int y;
-void SaMbuttonClick( const vector<void*> params ) {
+void SaMbuttonClick( const vector<void*>* params ) {
 	SaSetCursorPos( params );
 	ActMouse( MOUSEEVENTF_MIDDLEDOWN );
 }
@@ -47,7 +47,7 @@ void SaMbuttonClick( const vector<void*> params ) {
 // [à¯êî]
 // int x;
 // int y;
-void SaRbuttonClick( const vector<void*> params ) {
+void SaRbuttonClick( const vector<void*>* params ) {
 	SaSetCursorPos( params );
 	ActMouse( MOUSEEVENTF_RIGHTDOWN );
 }

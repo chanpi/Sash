@@ -14,7 +14,7 @@ extern "C" {
 	// [Žg—p—á]
 	// Sash sadumpmemory 1234 /rw /H
 	// Sash sadumpmemory 1234 /FR 3000000 /TO 4000000
-	void SaDumpMemory( const std::vector<void*> params );
+	void SaDumpMemory( const std::vector<void*>* params );
 
 #ifdef __cplusplus
 }

@@ -22,8 +22,8 @@ namespace {
 // 文字緑：FOREGROUND_GREEN
 // 文字赤：FOREGROUND_RED
 // 文字白：FOREGROUND_WHITE
-void SaPrintfWithColor( const vector<void*> params ) {
-	if ( params.size() < 2 ) {
+void SaPrintfWithColor( const vector<void*>* params ) {
+	if ( params->size() < 2 ) {
 		_tprintf( g_szFormatErrorS, g_szSaPrintfWithColor, g_szError002 );
 	} else {
 		typedef map< tstring, WORD > TextAttributes;
@@ -37,7 +37,7 @@ void SaPrintfWithColor( const vector<void*> params ) {
 		CONSOLE_SCREEN_BUFFER_INFO csbi;
 		WORD wAttributes = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED; // デフォルトは文字色白
 
-		TextAttributes::iterator it = textAttributes.find( (LPCTSTR)params[0] );
+		TextAttributes::iterator it = textAttributes.find( (LPCTSTR)(*params)[0] );
 		if ( it != textAttributes.end() ) {
 			wAttributes = it->second;
 		}
@@ -45,6 +45,6 @@ void SaPrintfWithColor( const vector<void*> params ) {
 		GetConsoleScreenBufferInfo( stdHandle, &csbi ); // コンソールスクリーンバッファ（現在の状態）を得る
 		SetConsoleTextAttribute( stdHandle, FOREGROUND_RED ); // 文字色を赤に変更
 
-		_tprintf_s( g_szFormatS, (LPCTSTR)params[1] );
+		_tprintf_s( g_szFormatS, (LPCTSTR)(*params)[1] );
 	}
 }

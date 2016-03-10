@@ -23,7 +23,7 @@ int WINAPI WinMain( HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, LPSTR 
 {
 	int nArgs;
 	LPTSTR* lpArgs = CommandLineToArgvW(GetCommandLine(), &nArgs);
-	typedef map< tstring, void (*)( const vector<void*> ) > SaFuncType;
+	typedef map< tstring, void (*)( const vector<void*>* ) > SaFuncType;
 	
 	_tsetlocale( LC_ALL, g_szLocale );
 
@@ -59,7 +59,7 @@ int WINAPI WinMain( HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, LPSTR 
 		for ( INT i = 2; i < nArgs; i++ ) {
 			params.push_back( lpArgs[i] );
 		}
-		it->second( params );
+		it->second( &params );
 	} else {
 		_tprintf( g_szError000 );
 	}

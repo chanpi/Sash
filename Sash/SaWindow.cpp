@@ -21,9 +21,9 @@ namespace {
 
 // 対象のウィンドウを最前面に表示します。
 // [引数] なし
-void SaSetForegroundWindow( const vector<void*> params ) {
+void SaSetForegroundWindow( const vector<void*>* /*params*/ ) {
 	// ウィンドウハンドルは環境変数から検索するためコメントアウト
-	//HWND hWnd = (HWND)params[0];
+	//HWND hWnd = (HWND)(*params)[0];
 	SetForegroundWindow( GetWindowHandle() );
 }
 
@@ -32,12 +32,12 @@ void SaSetForegroundWindow( const vector<void*> params ) {
 // BOOL bSet;
 // bSetがTRUEの場合はhWndをアクティブにし、bSetがFALSEの場合は、以前アクティブだったウィンドウを再度アクティブにします。
 // 但し、以前アクティブだったウィンドウを再度アクティブにするのは、同一プロセス内で処理が行われたときのみ可能です。
-void SaSetActiveWindow( const vector<void*> params ) {
-	if ( params.size() < 1 ) {
+void SaSetActiveWindow( const vector<void*>* params ) {
+	if ( params->size() < 1 ) {
 		_tprintf( g_szFormatErrorS, g_szSaSetActiveWindow, g_szError002 );
 	} else {
 		static HWND hOldWnd = NULL;
-		BOOL bSet = (0 == _tcsicmp( (LPCTSTR)params[0], g_szTRUE )) ? TRUE : FALSE;
+		BOOL bSet = (0 == _tcsicmp( (LPCTSTR)(*params)[0], g_szTRUE )) ? TRUE : FALSE;
 
 		if ( bSet ) {
 			hOldWnd = SetActiveWindow( GetWindowHandle() );
@@ -56,8 +56,8 @@ void SaSetActiveWindow( const vector<void*> params ) {
 //  MB_ICONINFORMATION, MB_ICONASTERISK		丸の中に小文字の「i」が描かれたアイコンを表示します。
 //  MB_ICONQUESTION							疑問符（?）アイコンを表示します。
 //  MB_ICONSTOP,MB_ICONERROR,MB_ICONHAND	停止マークアイコンを表示します。
-void SaMessageBox( const vector<void*> params ) {
-	if ( params.size() < 3 ) {
+void SaMessageBox( const vector<void*>* params ) {
+	if ( params->size() < 3 ) {
 		_tprintf( g_szFormatErrorS, g_szSaMessageBox, g_szError002 );
 	} else {
 		UINT uType = MB_OK;
@@ -77,7 +77,7 @@ void SaMessageBox( const vector<void*> params ) {
 		mboxType.insert(make_pair(_T("MB_OK"), MB_OK));
 		//mboxType.insert(make_pair(_T(""), ));
 
-		_tcscpy_s( szUtype, _countof(szUtype), (LPCTSTR)params[2] );
+		_tcscpy_s( szUtype, _countof(szUtype), (LPCTSTR)(*params)[2] );
 		LPCTSTR pType = _tcstok_s( szUtype, g_szBar, &pNext );
 		MessageBoxType::iterator it;
 		while ( NULL != pType ) {
@@ -88,7 +88,7 @@ void SaMessageBox( const vector<void*> params ) {
 			pType = _tcstok_s( NULL, g_szBar, &pNext );
 		}
 
-		MessageBox( NULL, (LPCTSTR)params[0], (LPCTSTR)params[1], uType );
+		MessageBox( NULL, (LPCTSTR)(*params)[0], (LPCTSTR)(*params)[1], uType );
 	}
 }
 
@@ -108,13 +108,13 @@ HWND GetWindowHandle( VOID ) {
 	params.push_back( (void*)g_szSaHwndClassNameParent );
 	params.push_back( szClassNameParent );
 	params.push_back( &nBuf );
-	SaGetEnvironmentVariable( params );
+	SaGetEnvironmentVariable( &params );
 	params.clear();
 	params.push_back( (void*)g_szSaHwndWindowNameParent );
 	params.push_back( szWindowNameParent );
 	nBuf = _countof(szWindowNameParent);
 	params.push_back( &nBuf );
-	SaGetEnvironmentVariable( params );
+	SaGetEnvironmentVariable( &params );
 
 	hWndParent = FindWindow( szClassNameParent, szWindowNameParent );
 	if ( NULL != hWndParent ) {
@@ -124,14 +124,14 @@ HWND GetWindowHandle( VOID ) {
 		params.push_back( g_szClassNameChild );
 		nBuf = _countof(g_szClassNameChild);
 		params.push_back( &nBuf );
-		SaGetEnvironmentVariable( params );
+		SaGetEnvironmentVariable( &params );
 
 		params.clear();
 		params.push_back( (void*)g_szSaHwndWindowNameChild );
 		params.push_back( g_szWindowNameChild );
 		nBuf = _countof(g_szWindowNameChild);
 		params.push_back( &nBuf );
-		SaGetEnvironmentVariable( params );
+		SaGetEnvironmentVariable( &params );
 		if ( 0 == _tcslen( g_szClassNameChild ) && 0 == _tcslen( g_szWindowNameChild ) ) {
 			// 子ウィンドウの指定なし
 			return hWndParent;
